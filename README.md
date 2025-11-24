@@ -1,73 +1,163 @@
-# todo-list
+# TODO List 项目说明文档
 
-This template should help get you started developing with Vue 3 in Vite.
+一个功能完整的任务管理应用，基于 Vue 3 + TypeScript + Pinia 构建。
 
-## Recommended IDE Setup
+## 🎯 功能特性
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### ✅ 已完成的核心功能
+- **添加待办事项**：支持标题（必填）、描述（可选）、分类、优先级设置
+- **删除待办事项**：每个任务项都有删除按钮，支持一键删除
+- **标记完成状态**：支持复选框和按钮两种方式切换完成/未完成状态
+- **查看任务列表**：完整展示任务信息，包括统计数据和空状态处理
 
-## Recommended Browser Setup
+### 🚀 增强功能
+- **智能筛选**：按分类、状态、优先级筛选任务
+- **搜索功能**：支持标题和描述的关键词搜索
+- **多维度排序**：按创建时间、优先级、标题排序（升序/降序）
+- **数据持久化**：使用 localStorage 保存数据，页面刷新不丢失
+- **响应式设计**：支持桌面端和移动端，适配不同屏幕尺寸
+- **美观UI**：现代化设计，包含卡片布局、悬停效果、渐变背景
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## 1. 技术选型
 
-## Type Support for `.vue` Imports in TS
+### 前端框架
+- **Vue 3**：理由：组合式 API 更灵活，TypeScript 支持完善，性能优秀
+- **TypeScript**：理由：类型安全，更好的开发体验和代码维护性
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+### 状态管理
+- **Pinia**：理由：Vue 官方推荐，轻量级，TypeScript 支持良好
 
-## Customize configuration
+### 存储方案
+- **localStorage**：理由：轻量级，无需后端，适合单机应用
+- **替代方案对比**：
+  - IndexedDB：功能更强大但复杂度高，当前需求 localStorage 足够
+  - 后端数据库：增加部署复杂度，当前单机应用无需网络存储
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### 构建工具
+- **Vite**：理由：开发服务器启动快，热更新迅速，构建优化好
 
-## Project Setup
+## 2. 项目结构设计
 
-```sh
+### 整体架构
+前端单页应用，采用组件化开发模式，数据通过 Pinia 状态管理。
+
+### 目录结构
+```
+src/
+├── components/          # 可复用组件
+│   ├── TodoForm.vue     # 添加任务表单
+│   ├── TodoList.vue     # 任务列表展示
+│   └── TodoFilter.vue   # 筛选功能组件
+├── views/               # 页面组件
+│   └── HomeView.vue     # 主页面
+├── stores/              # 状态管理
+│   └── todo.ts          # 任务状态管理
+├── types/               # TypeScript 类型定义
+│   └── todo.ts          # 任务相关类型
+└── assets/              # 静态资源
+    └── main.css         # 全局样式
+```
+
+### 模块职责说明
+- **TodoForm**：负责任务创建，包含表单验证和提交逻辑
+- **TodoList**：负责任务展示，包含状态切换和删除功能
+- **TodoFilter**：负责筛选和搜索功能
+- **todo store**：集中管理任务数据，包含 CRUD 操作和持久化
+
+## 3. 需求细节与决策
+
+### 任务描述处理
+- **描述字段可选**：考虑到简单任务可能不需要详细描述
+- **空输入处理**：标题为必填项，有表单验证和禁用状态提示
+
+### 完成状态显示
+- **视觉反馈**：已完成任务有删除线、透明度变化和背景色区分
+- **双重操作**：支持复选框点击和按钮点击两种切换方式
+
+### 排序逻辑
+- **默认排序**：按创建时间降序（最新创建的任务显示在最前面）
+- **可选排序**：支持按优先级、标题排序，可切换升序/降序
+
+### 扩展功能设计
+- **筛选功能**：多维度筛选，支持组合条件查询
+- **搜索功能**：实时搜索，支持标题和描述内容匹配
+- **响应式设计**：媒体查询适配不同屏幕尺寸
+
+## 4. AI 使用说明
+
+### AI 工具使用
+- **DeepSeek AI 助手**：用于代码实现和问题解决
+
+### AI 使用环节
+- **布局优化**：AI 协助分析并优化页面布局结构
+- **兼容性调整**：AI 建议 IE 浏览器兼容性优化方案
+- **代码重构**：AI 协助将两栏布局改为更合理的功能分组
+
+### AI 输出修改
+- 原始布局为简单的垂直排列，AI 建议改为两栏布局提升空间利用率
+- 根据用户反馈，AI 协助将筛选功能与任务列表合并到同一区域
+- AI 提供的兼容性方案经过实际测试和调整
+
+## 5. 运行与测试方式
+
+### 本地运行
+```bash
+# 安装依赖
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# 启动开发服务器
 npm run dev
+
+# 访问应用
+http://localhost:5174/
 ```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
+### 构建生产版本
+```bash
+# 构建项目
 npm run build
+
+# 预览生产版本
+npm run preview
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
+### 测试
+```bash
+# 单元测试
 npm run test:unit
-```
 
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
-
-```sh
-# Install browsers for the first run
-npx playwright install
-
-# When testing on CI, must build the project first
-npm run build
-
-# Runs the end-to-end tests
+# 端到端测试
 npm run test:e2e
-# Runs the tests only on Chromium
-npm run test:e2e -- --project=chromium
-# Runs the tests of a specific file
-npm run test:e2e -- tests/example.spec.ts
-# Runs the tests in debug mode
-npm run test:e2e -- --debug
-```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
+# 代码检查
 npm run lint
 ```
+
+### 已测试环境
+- **Node.js**: v16+
+- **浏览器**: Chrome, Firefox, Edge, IE11（基础兼容）
+- **操作系统**: Windows, macOS
+
+### 已知问题
+- IE 浏览器对现代 CSS 特性支持有限，已做基础兼容处理
+- 移动端小屏幕下部分样式可能需要进一步优化
+
+## 6. 总结与反思
+
+### 项目亮点
+1. **功能完整**：不仅实现了核心 CRUD 功能，还提供了丰富的增强功能
+2. **用户体验优秀**：响应式设计、美观的 UI、流畅的交互体验
+3. **代码质量高**：TypeScript 类型安全，组件化设计清晰
+4. **可扩展性强**：模块化架构便于后续功能扩展
+
+### 改进方向
+如果有更多时间，我会考虑：
+1. **数据同步**：添加云端同步功能，支持多设备使用
+2. **提醒功能**：为任务添加时间提醒和通知
+3. **数据导出**：支持任务数据导出为 CSV 或 JSON 格式
+4. **主题切换**：添加深色模式支持
+5. **性能优化**：虚拟滚动支持大量任务的流畅展示
+
+### 技术收获
+通过本项目，深入掌握了 Vue 3 组合式 API、Pinia 状态管理、TypeScript 类型系统，以及现代前端开发的最佳实践。
+

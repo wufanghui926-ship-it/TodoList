@@ -121,6 +121,14 @@ label {
   transition: border-color 0.15s ease-in-out;
 }
 
+/* 输入框placeholder样式 */
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #6c757d;
+  font-weight: normal;
+  font-size: 0.9rem;
+}
+
 .form-input:focus,
 .form-textarea:focus,
 .form-select:focus {
